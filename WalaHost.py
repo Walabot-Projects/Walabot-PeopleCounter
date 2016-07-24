@@ -11,13 +11,13 @@ from string import digits # the string '0123456789'
 from math import sin, cos, radians, sqrt # used to calculate MAX_X_VALUE
 from os import system
 
-R_MIN, R_MAX, R_RES = 10, 75, 10 # walabot SetArenaR parameters
+R_MIN, R_MAX, R_RES = 10, 75, 5 # walabot SetArenaR parameters
 THETA_MIN, THETA_MAX, THETA_RES = -1, 1, 10 # walabot SetArenaTheta parameters
 PHI_MIN, PHI_MAX, PHI_RES = -12, 20, 5 # walabot SetArenaPhi parametes
 THRESHOLD = 15 # walabot SetThreshold parametes
 
 MAX_X_VALUE = R_MAX * cos(radians(THETA_MAX)) * sin(radians(PHI_MAX))
-SENSITIVITY = 0.5 # amount of seconds to wait after a move has been detected
+SENSITIVITY = 0.25 # amount of seconds to wait after a move has been detected
 TENDENCY_LOWER_BOUND = 0.1 # tendency below that won't count as entrance/exit
 IGNORED_LENGTH = 5 # len in cm to ignore targets in center of arena (each side)
 
@@ -125,11 +125,11 @@ def analizeAndAlert(dataList, numOfPeople):
     if tendency > 0:
         result = ': Someone has left!'.ljust(24)
         numOfPeople -= 1
-        system('play --no-show-progress --null --channels 1 synth %s sine %f' % (0.25, 800))
+        system('play --no-show-progress --null --channels 1 synth %s sine %f' % (0.20, 800))
     elif tendency < 0:
         result = ': Someone has entered!'.ljust(24)
         numOfPeople += 1
-        system('play --no-show-progress --null --channels 1 synth %s sine %f' % (0.25, 1200))
+        system('play --no-show-progress --null --channels 1 synth %s sine %f' % (0.20, 1200))
     else: # do not count as a valid entrance / exit
         return numOfPeople
     numToDisplay = ' Currently '+str(numOfPeople)+' people in the room.'
@@ -137,8 +137,8 @@ def analizeAndAlert(dataList, numOfPeople):
     return numOfPeople
 
 def getTypeOfMovement(dataList):
-    velocity = getSlopeUsingRegression(dataList)
-    tendency = (velocity * len(dataList)) / (2 * MAX_X_VALUE)
+    velocity, length = getSlopeUsingRegression(dataList)
+    tendency = (velocity * length) / (2 * MAX_X_VALUE)
     #last_values = dataList[:-int(len(dataList)/10)]
     #print(tendency)
     print()
@@ -153,12 +153,12 @@ def getSlopeUsingRegression(dataList):
             dataList        A list of values
         Returns:
             slope           the slope of an estimated linear regression
+            length          the length of dataList
     """
     Sx = Sy = Sxx = Sxy = 0
     for x, y in enumerate(dataList):
         Sx, Sy, Sxx, Sxy = Sx + x, Sy + y, Sxx + x**2, Sxy + x*y
-    N = len(dataList)
-    return (Sxy * N - Sy * Sx) / (Sxx * N - Sx * Sx)
+    return (Sxy * (x+1) - Sy * Sx) / (Sxx * (x+1) - Sx * Sx), x + 1
 
 def stopAndDisconnectWalabot():
     """ Stop Walabot and disconnect the device.
