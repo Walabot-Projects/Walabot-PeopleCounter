@@ -11,9 +11,9 @@ from string import digits # the string '0123456789'
 from math import sin, cos, radians, sqrt # used to calculate MAX_X_VALUE
 from os import system
 
-R_MIN, R_MAX, R_RES = 10, 50, 5 # walabot SetArenaR parameters
+R_MIN, R_MAX, R_RES = 10, 50, 2 # walabot SetArenaR parameters
 THETA_MIN, THETA_MAX, THETA_RES = -1, 1, 10 # walabot SetArenaTheta parameters
-PHI_MIN, PHI_MAX, PHI_RES = -10, 10, 5 # walabot SetArenaPhi parametes
+PHI_MIN, PHI_MAX, PHI_RES = -10, 10, 2 # walabot SetArenaPhi parametes
 THRESHOLD = 15 # walabot SetThreshold parametes
 
 MAX_X_VALUE = R_MAX * cos(radians(THETA_MAX)) * sin(radians(PHI_MAX))
@@ -114,7 +114,6 @@ def getDataList():
                     numOfFalseTriggers = 0
                 else:
                     numOfFalseTriggers += 1
-            if len(targets) > 1: # cannot say anything about one target
             yList = [t.yPosCm for t in targets if abs(t.yPosCm)>IGNORED_LENGTH]
             if yList:
                 return yList
