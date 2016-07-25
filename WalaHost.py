@@ -115,8 +115,9 @@ def getDataList():
                 else:
                     numOfFalseTriggers += 1
             if len(targets) > 1: # cannot say anything about one target
-                return [t.yPosCm for t in targets
-                    if abs(t.yPosCm) > IGNORED_LENGTH]
+            yList = [t.yPosCm for t in targets if abs(t.yPosCm)>IGNORED_LENGTH]
+            if yList:
+                return yList
 
 def analizeAndAlert(dataList, numOfPeople):
     """ Analize a given list of xPosCm's and print to the screen one of two
