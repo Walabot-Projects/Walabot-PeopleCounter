@@ -127,23 +127,19 @@ def analizeAndAlert(dataList, numOfPeople):
     if tendency > 0:
         result = ': Someone has left!'.ljust(24)
         numOfPeople -= 1
-        system('play --no-show-progress --null --channels 1 synth %s sine %f' % (0.20, 800))
     elif tendency < 0:
         result = ': Someone has entered!'.ljust(24)
         numOfPeople += 1
-        system('play --no-show-progress --null --channels 1 synth %s sine %f' % (0.20, 1200))
     else: # do not count as a valid entrance / exit
         return numOfPeople
     numToDisplay = ' Currently '+str(numOfPeople)+' people in the room.'
-    print('\n-', currentTime+result+numToDisplay)
+    print(currentTime+result+numToDisplay)
     return numOfPeople
 
 def getTypeOfMovement(dataList):
     if dataList:
         velocity, length = getVelocityAndLength(dataList)
         tendency = (velocity * length) / (2 * MAX_X_VALUE)
-        print()
-        print(list(map(int, dataList)))
         bothSides = any(x>0 for x in dataList) and any(x<0 for x in dataList)
         aboveLowerBound = abs(tendency) > TENDENCY_LOWER_BOUND
         if bothSides and aboveLowerBound:
