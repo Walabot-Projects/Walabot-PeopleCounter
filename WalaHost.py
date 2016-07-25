@@ -13,13 +13,13 @@ from os import system
 
 R_MIN, R_MAX, R_RES = 10, 75, 5 # walabot SetArenaR parameters
 THETA_MIN, THETA_MAX, THETA_RES = -1, 1, 10 # walabot SetArenaTheta parameters
-PHI_MIN, PHI_MAX, PHI_RES = -12, 20, 5 # walabot SetArenaPhi parametes
+PHI_MIN, PHI_MAX, PHI_RES = -10, 10, 5 # walabot SetArenaPhi parametes
 THRESHOLD = 15 # walabot SetThreshold parametes
 
 MAX_X_VALUE = R_MAX * cos(radians(THETA_MAX)) * sin(radians(PHI_MAX))
 SENSITIVITY = 0.25 # amount of seconds to wait after a move has been detected
 TENDENCY_LOWER_BOUND = 0.1 # tendency below that won't count as entrance/exit
-IGNORED_LENGTH = 5 # len in cm to ignore targets in center of arena (each side)
+IGNORED_LENGTH = 3 # len in cm to ignore targets in center of arena (each side)
 
 def initWalabot():
     """ Load and initialize the Walabot SDK. A cross platform function.
@@ -103,6 +103,7 @@ def getDataList():
         targets = wlbt.GetSensorTargets()
         distance = lambda t: sqrt(t.xPosCm**2 + t.yPosCm**2 + t.zPosCm**2)
         if targets:
+            targets = [max(targets, key=distance)]
             numOfFalseTriggers = 0
             triggersToStop = wlbt.GetAdvancedParameter('FrameRate')*SENSITIVITY
             while numOfFalseTriggers < triggersToStop:
@@ -110,6 +111,7 @@ def getDataList():
                 newTargets = wlbt.GetSensorTargets()
                 if newTargets:
                     targets.append(max(newTargets, key=distance))
+                    numOfFalseTriggers = 0
                 else:
                     numOfFalseTriggers += 1
             if len(targets) > 1: # cannot say anything about one target
@@ -137,18 +139,19 @@ def analizeAndAlert(dataList, numOfPeople):
     return numOfPeople
 
 def getTypeOfMovement(dataList):
-    velocity, length = getSlopeUsingRegression(dataList)
-    tendency = (velocity * length) / (2 * MAX_X_VALUE)
-    #last_values = dataList[:-int(len(dataList)/10)]
-    #print(tendency)
-    print()
-    print(list(map(int, dataList)))
-    if abs(tendency) > TENDENCY_LOWER_BOUND:
-        return tendency
+    if dataList:
+        velocity, length = getVelocityAndLength(dataList)
+        tendency = (velocity * length) / (2 * MAX_X_VALUE)
+        print()
+        print(list(map(int, dataList)))
+        if abs(tendency) > TENDENCY_LOWER_BOUND:
+            return tendency
+        return 0
     return 0
 
-def getSlopeUsingRegression(dataList):
-    """ Calculates the slope of a given set of values, using linear regression.
+def getVelocityAndLength(dataList):
+    """ Calculates the slope (velocity) of a given set of values using linear
+        regression, and the number of given values.
         Arguments:
             dataList        A list of values
         Returns:
