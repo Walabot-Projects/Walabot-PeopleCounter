@@ -11,7 +11,7 @@ from os import system
 
 R_MIN, R_MAX, R_RES = 10, 50, 2 # walabot SetArenaR parameters
 THETA_MIN, THETA_MAX, THETA_RES = -1, 1, 10 # walabot SetArenaTheta parameters
-PHI_MIN, PHI_MAX, PHI_RES = -12, 12, 2 # walabot SetArenaPhi parametes
+PHI_MIN, PHI_MAX, PHI_RES = -15, 15, 2 # walabot SetArenaPhi parametes
 THRESHOLD = 15 # walabot SetThreshold parametes
 MAX_Y_VALUE = R_MAX * cos(radians(THETA_MAX)) * sin(radians(PHI_MAX))
 SENSITIVITY = 0.25 # amount of seconds to wait after a move has been detected
