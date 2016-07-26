@@ -171,7 +171,10 @@ def getVelocityAndLength(dataList):
     Sx = Sy = Sxx = Sxy = 0
     for x, y in enumerate(dataList):
         Sx, Sy, Sxx, Sxy = Sx + x, Sy + y, Sxx + x**2, Sxy + x*y
-    return (Sxy * (x+1) - Sy * Sx) / (Sxx * (x+1) - Sx * Sx), x + 1
+    try:
+        return (Sxy * (x+1) - Sy * Sx) / (Sxx * (x+1) - Sx * Sx), x + 1
+    except ZeroDivisionError:
+        return 0, 0
 
 def stopAndDisconnectWalabot():
     """ Stops Walabot and disconnect the device.
