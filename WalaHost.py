@@ -1,5 +1,3 @@
-# NOTE: Currently working on y-axis of the walabot
-
 from __future__ import print_function # python2-python3 compatibillity
 try: input = raw_input # python2-python3 compatibillity
 except NameError: pass # python2-python3 compatibillity
@@ -15,7 +13,6 @@ R_MIN, R_MAX, R_RES = 10, 50, 2 # walabot SetArenaR parameters
 THETA_MIN, THETA_MAX, THETA_RES = -1, 1, 10 # walabot SetArenaTheta parameters
 PHI_MIN, PHI_MAX, PHI_RES = -10, 10, 2 # walabot SetArenaPhi parametes
 THRESHOLD = 15 # walabot SetThreshold parametes
-
 MAX_X_VALUE = R_MAX * cos(radians(THETA_MAX)) * sin(radians(PHI_MAX))
 SENSITIVITY = 0.25 # amount of seconds to wait after a move has been detected
 TENDENCY_LOWER_BOUND = 0.2 # tendency below that won't count as entrance/exit
@@ -119,8 +116,13 @@ def getDataList():
                 return yList
 
 def analizeAndAlert(dataList, numOfPeople):
-    """ Analize a given list of xPosCm's and print to the screen one of two
-        results: an entrance or an exit.
+    """ Analize a given dataList and print to the screen one of two results
+        if occured: an entrance or an exit.
+        Arguments:
+            dataList        A list of values
+            numOfPeople     The current number of people in the room
+        returns:
+            numOfPeople     The new number of people in the room
     """
     currentTime = datetime.now().strftime('%H:%M:%S')
     tendency = getTypeOfMovement(dataList)
@@ -137,6 +139,17 @@ def analizeAndAlert(dataList, numOfPeople):
     return numOfPeople
 
 def getTypeOfMovement(dataList):
+    """ Calculate and return the type of movement detected.
+        The movement only counts as a movement inside/outside if the tendency
+        if above TENDENCY_LOWER_BOUND and if the we have at least of item from
+        both sides of the door header.
+        Arguments:
+            dataList        A list of values
+        Returns:
+            tendency        if zero - not count as a valid entrance/exit
+                            if positive - counts as exiting the room
+                            if negative - counts as entering the room
+    """
     if dataList:
         velocity, length = getVelocityAndLength(dataList)
         tendency = (velocity * length) / (2 * MAX_X_VALUE)
@@ -147,7 +160,7 @@ def getTypeOfMovement(dataList):
     return 0
 
 def getVelocityAndLength(dataList):
-    """ Calculates the slope (velocity) of a given set of values using linear
+    """ Calculate the slope (velocity) of a given set of values using linear
         regression, and the number of given values.
         Arguments:
             dataList        A list of values
@@ -161,12 +174,18 @@ def getVelocityAndLength(dataList):
     return (Sxy * (x+1) - Sy * Sx) / (Sxx * (x+1) - Sx * Sx), x + 1
 
 def stopAndDisconnectWalabot():
-    """ Stop Walabot and disconnect the device.
+    """ Stops Walabot and disconnect the device.
     """
     wlbt.Stop()
     wlbt.Disconnect()
 
 def WalaHost():
+    """ Main function. init and configure the Walabot, get the current number
+        of people from the user, start the main loop of the app.
+        Walabot scan constantly and record sets of data (when peoples are
+        near the door header). For each data set, the app calculates the type
+        of movement recorded and acts accordingly.
+    """
     verifyWalabotIsConnected()
     numOfPeople = getNumOfPeopleInside()
     setWalabotSettings()
