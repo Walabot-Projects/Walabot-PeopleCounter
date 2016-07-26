@@ -6,14 +6,14 @@ from os.path import join
 from imp import load_source # used to load the walabot library
 from datetime import datetime, timedelta # used to the current time
 from string import digits # the string '0123456789'
-from math import sin, cos, radians, sqrt # used to calculate MAX_X_VALUE
+from math import sin, cos, radians, sqrt # used to calculate MAX_Y_VALUE
 from os import system
 
 R_MIN, R_MAX, R_RES = 10, 50, 2 # walabot SetArenaR parameters
 THETA_MIN, THETA_MAX, THETA_RES = -1, 1, 10 # walabot SetArenaTheta parameters
-PHI_MIN, PHI_MAX, PHI_RES = -10, 10, 2 # walabot SetArenaPhi parametes
+PHI_MIN, PHI_MAX, PHI_RES = -12, 12, 2 # walabot SetArenaPhi parametes
 THRESHOLD = 15 # walabot SetThreshold parametes
-MAX_X_VALUE = R_MAX * cos(radians(THETA_MAX)) * sin(radians(PHI_MAX))
+MAX_Y_VALUE = R_MAX * cos(radians(THETA_MAX)) * sin(radians(PHI_MAX))
 SENSITIVITY = 0.25 # amount of seconds to wait after a move has been detected
 TENDENCY_LOWER_BOUND = 0.2 # tendency below that won't count as entrance/exit
 IGNORED_LENGTH = 5 # len in cm to ignore targets in center of arena (each side)
@@ -127,13 +127,13 @@ def analizeAndAlert(dataList, numOfPeople):
     currentTime = datetime.now().strftime('%H:%M:%S')
     tendency = getTypeOfMovement(dataList)
     if tendency > 0:
-        result = ': Someone has left!'.ljust(24)
+        result = ': Someone has left!'.ljust(25)
         numOfPeople -= 1
     elif tendency < 0:
-        result = ': Someone has entered!'.ljust(24)
+        result = ': Someone has entered!'.ljust(25)
         numOfPeople += 1
     else: # do not count as a valid entrance / exit
-        return numOfPeople
+        result = ': Someone is at the door!'.ljust(25)
     numToDisplay = ' Currently '+str(numOfPeople)+' people in the room.'
     print(currentTime+result+numToDisplay)
     return numOfPeople
@@ -152,7 +152,7 @@ def getTypeOfMovement(dataList):
     """
     if dataList:
         velocity, length = getVelocityAndLength(dataList)
-        tendency = (velocity * length) / (2 * MAX_X_VALUE)
+        tendency = (velocity * length) / (2 * MAX_Y_VALUE)
         bothSides = any(x>0 for x in dataList) and any(x<0 for x in dataList)
         aboveLowerBound = abs(tendency) > TENDENCY_LOWER_BOUND
         if bothSides and aboveLowerBound:

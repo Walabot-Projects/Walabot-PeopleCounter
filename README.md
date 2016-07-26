@@ -32,7 +32,7 @@ max_usb_current=1
 ```
 ##### Attaching the Walabot to the Door Header
 
-In order of the application to work correctly the Y axis of the Walabot have to be perpendicular to the door header, with the positive side facing outside the room.  
+In order of the application to work correctly the Y axis of the Walabot has to be perpendicular to the door header, with the positive side facing outside the room.  
 [Take a look here](http://api.walabot.com/_features.html) to verify the coordinate system in your Walabot.
 
 ### Editing the Code
