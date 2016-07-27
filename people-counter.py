@@ -5,9 +5,7 @@ from sys import platform
 from os.path import join
 from imp import load_source # used to load the walabot library
 from datetime import datetime, timedelta # used to the current time
-from string import digits # the string '0123456789'
 from math import sin, cos, radians, sqrt # used to calculate MAX_Y_VALUE
-from os import system
 
 R_MIN, R_MAX, R_RES = 10, 60, 2 # walabot SetArenaR parameters
 THETA_MIN, THETA_MAX, THETA_RES = -10, 10, 10 # walabot SetArenaTheta parameters
@@ -40,14 +38,7 @@ def getNumOfPeopleInside():
             num             Number of people in the room that got as input
     """
     num = input('- Enter current number of people in the room: ')
-    if not num:
-        print('- Invalid input, try again.')
-        return getNumOfPeopleInside()
-    for digit in num:
-        if digit not in digits:
-            print('- Invalid input, try again.')
-            return getNumOfPeopleInside()
-    if int(num) < 0:
+    if (not num.isdigit()) or (int(num) < 0):
         print('- Invalid input, try again.')
         return getNumOfPeopleInside()
     return int(num)
