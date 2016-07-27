@@ -173,7 +173,7 @@ def stopAndDisconnectWalabot():
     wlbt.Stop()
     wlbt.Disconnect()
 
-def WalaHost():
+def PeopleCounter():
     """ Main function. init and configure the Walabot, get the current number
         of people from the user, start the main loop of the app.
         Walabot scan constantly and record sets of data (when peoples are
@@ -193,4 +193,4 @@ def WalaHost():
         stopAndDisconnectWalabot()
 
 if __name__ == '__main__':
-    WalaHost()
+    PeopleCounter()
