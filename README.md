@@ -1,4 +1,4 @@
-# WalaHost - A Walabot Application
+# PeopleCounter - A Walabot Application
 
 This is a simple Walabot application that detects people entering / exiting rooms.
 
