@@ -142,30 +142,27 @@ def getTypeOfMovement(dataList):
                             if negative - counts as entering the room
     """
     if dataList:
-        velocity, length = getVelocityAndLength(dataList)
-        tendency = (velocity * length) / (2 * MAX_Y_VALUE)
+        velocity = getVelocity(dataList)
+        tendency = (velocity * len(dataList)) / (2 * MAX_Y_VALUE)
         bothSides = any(x>0 for x in dataList) and any(x<0 for x in dataList)
         aboveLowerBound = abs(tendency) > TENDENCY_LOWER_BOUND
         if bothSides or aboveLowerBound:
             return tendency
     return 0
 
-def getVelocityAndLength(dataList):
-    """ Calculate the slope (velocity) of a given set of values using linear
-        regression, and the number of given values.
+def getVelocity(data):
+    """ Calculate velocity of a given set of values using linear regression.
         Arguments:
-            dataList        A list of values
+            data        A list of values
         Returns:
-            slope           the slope of an estimated linear regression
-            length          the length of dataList
+            velocity        the slope of an estimated linear regression
     """
-    Sx = Sy = Sxx = Sxy = 0
-    for x, y in enumerate(dataList):
-        Sx, Sy, Sxx, Sxy = Sx + x, Sy + y, Sxx + x**2, Sxy + x*y
-    try:
-        return (Sxy * (x+1) - Sy * Sx) / (Sxx * (x+1) - Sx * Sx), x + 1
-    except ZeroDivisionError:
-        return 0, 0
+    sumY = len(data) * (len(data) - 1) / 2 # Gauss formula
+    sumX = sumXX = sumXY = 0
+    for x, y in enumerate(data):
+        sumX, sumXX, sumXY = sumX + x, sumXX + x**2, sumXY + x*y
+    try: return (sumXY*len(data) - sumY*sumX) / (sumXX*len(data) - sumX**2)
+    except ZeroDivisionError: return 0
 
 def stopAndDisconnectWalabot():
     """ Stops Walabot and disconnect the device.
