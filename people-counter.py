@@ -153,16 +153,17 @@ def getTypeOfMovement(dataList):
 def getVelocity(data):
     """ Calculate velocity of a given set of values using linear regression.
         Arguments:
-            data        A list of values
+            data            An iterator contains values.
         Returns:
-            velocity        the slope of an estimated linear regression
+            velocity        The estimates slope.
     """
-    sumY = len(data) * (len(data) - 1) / 2 # Gauss formula
-    sumX = sumXX = sumXY = 0
+    sumY = sumXY = 0
     for x, y in enumerate(data):
-        sumX, sumXX, sumXY = sumX + x, sumXX + x**2, sumXY + x*y
-    try: return (sumXY*len(data) - sumY*sumX) / (sumXX*len(data) - sumX**2)
-    except ZeroDivisionError: return 0
+        sumY, sumXY = sumY + y, sumXY + x*y
+    if sumXY == 0: return 0 # no values / one values only / all values are 0
+    sumX = x * (x+1) / 2 # Gauss's formula - sum of first x natural numbers
+    sumXX = x * (x+1) * (2*x+1) / 6 # sum of sequence of squares
+    return (sumXY - sumX*sumY/(x+1)) / (sumXX - sumX**2/(x+1))
 
 def stopAndDisconnectWalabot():
     """ Stops Walabot and disconnect the device.
