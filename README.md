@@ -18,7 +18,7 @@ The X and Z axes are ignored (roughly) in this app.
 1. [Install the Walabot SDK.](http://api.walabot.com/_install.html)
 2. Raspberry Pi only: Configure it to work with Walabot (explained below).
 3. Attach the Walabot to the center of your door header (explained below).
-4. Run `WalaHost.py` and follow the instructions.
+4. Run `people-counter.py` and follow the instructions.
 
 **IMPORTANT NOTE:** Current Walabot settings are for vMaker3 and Raspberry Pi 3.
 
