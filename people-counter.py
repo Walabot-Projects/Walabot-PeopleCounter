@@ -14,7 +14,7 @@ THRESHOLD = 15 # walabot SetThreshold parametes
 MAX_Y_VALUE = R_MAX * cos(radians(THETA_MAX)) * sin(radians(PHI_MAX))
 SENSITIVITY = 0.25 # amount of seconds to wait after a move has been detected
 TENDENCY_LOWER_BOUND = 0.1 # tendency below that won't count as entrance/exit
-IGNORED_LENGTH = 5 # len in cm to ignore targets in center of arena (each side)
+IGNORED_LENGTH = 3 # len in cm to ignore targets in center of arena (each side)
 
 def initWalabot():
     """ Load and initialize the Walabot SDK. A cross platform function.
