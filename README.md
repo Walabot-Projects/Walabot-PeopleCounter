@@ -15,10 +15,11 @@ The X and Z axes are ignored (roughly) in this app.
 
 ### How to Use
 
-1. [Install the Walabot SDK.](http://api.walabot.com/_install.html)
-2. Raspberry Pi only: Configure it to work with Walabot (explained below).
-3. Attach the Walabot to the center of your door header (explained below).
-4. Run `people-counter.py` and follow the instructions.
+1. [Install the Walabot SDK.](http://walabot.com/getting-started)
+2. [Install the WalabotAPI Python library using pip.](http://api.walabot.com/_pythonapi.html)
+3. Raspberry Pi only: Configure it to work with Walabot (explained below).
+4. Attach the Walabot to the center of your door header (explained below).
+5. Run `people-counter.py` and follow the instructions.
 
 **IMPORTANT NOTE:** Current Walabot settings are for vMaker3 and Raspberry Pi 3.
 
