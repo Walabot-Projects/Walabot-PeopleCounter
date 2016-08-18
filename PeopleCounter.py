@@ -1,4 +1,4 @@
-from __future__ import print_function # python2-python3 compatibillity
+from __future__ import print_function, division # python2-python3 compatibillity
 try: input = raw_input # python2-python3 compatibillity
 except NameError: pass # python2-python3 compatibillity
 from datetime import datetime, timedelta # used to the current time
