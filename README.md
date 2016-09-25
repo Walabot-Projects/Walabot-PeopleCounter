@@ -1,7 +1,8 @@
 # PeopleCounter - A Walabot Application
 
-This is a simple Walabot application that detects people entering / exiting rooms.
+[![Walabot Meet Raspberry Pi! - Walabot Wed](http://img.youtube.com/vi/C6q0XJ4VuKk/0.jpg)](http://www.youtube.com/watch?v=C6q0XJ4VuKk)
 
+This is a simple Walabot application that detects people entering / exiting rooms.
 
 The code is written in Python and works on both Python 2 and Python 3.  
 The app was tested on Windows 10, Ubuntu 16.04 LTS and Raspberry Pi 3.
