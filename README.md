@@ -1,4 +1,4 @@
-# PeopleCounter - A Walabot Application
+# People_counter - A Walabot Application
 
 [![Walabot Meet Raspberry Pi! - Walabot Wed](http://img.youtube.com/vi/C6q0XJ4VuKk/0.jpg)](http://www.youtube.com/watch?v=C6q0XJ4VuKk)
 
@@ -19,7 +19,7 @@ The X and Z axes are ignored (roughly) in this app.
 1. Install the [Walabot SDK](http://walabot.com/getting-started) and the [WalabotAPI Python library](https://github.com/Walabot-Projects/Walabot-HelloWalabot#how-to-use) using pip.
 2. Raspberry Pi only: Configure it to work with Walabot (explained below).
 3. Attach the Walabot to the center of your door header (explained below).
-4. Run `PeopleCounter.py` and follow the instructions.
+4. Run `People_counter.py` and follow the instructions.
 
 **IMPORTANT NOTE:** Current Walabot settings are for the Walabot Starter and Raspberry Pi 3.
 
