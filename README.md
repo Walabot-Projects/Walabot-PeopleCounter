@@ -19,7 +19,7 @@ A positive number means there's a person inside the room, a negative number mean
 2. Attach the Walabot to the center of your door header (explained below).
 3. Run `people_counter.py` and follow the instructions.
 
-**IMPORTANT NOTE:** Current Walabot settings are for the Walabot Creator and Raspberry Pi 3.
+**IMPORTANT NOTE:** Current Walabot settings are for the [Walabot Creator](walabot.com) and Raspberry Pi 3.
 
 #### Attaching the Walabot to the Door Header
 
