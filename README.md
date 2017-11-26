@@ -1,4 +1,4 @@
-# People_counter - A Walabot Application
+# People Counter
 
 [![Walabot Meet Raspberry Pi! - Walabot Wed](http://img.youtube.com/vi/C6q0XJ4VuKk/0.jpg)](http://www.youtube.com/watch?v=C6q0XJ4VuKk)
 
