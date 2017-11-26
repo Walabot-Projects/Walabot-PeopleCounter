@@ -11,26 +11,16 @@ This is a simple Walabot application that detects people entering / exiting room
 
 The app uses the Walabot sensor to detect people inside it's arena (around the door header).  
 The Y axis is used to determine the location of a person relative to the door.  
-A positive number means there's a person outside the door, a negative number means there's someone inside.  
-The X and Z axes are ignored (roughly) in this app.
+A positive number means there's a person inside the room, a negative number means there's someone outside.  
 
 ## How to Use
 
 1. Install the [Walabot SDK](http://walabot.com/getting-started) and the [WalabotAPI Python library](https://github.com/Walabot-Projects/Walabot-HelloWalabot#how-to-use) using pip.
-2. Raspberry Pi only: Configure it to work with Walabot (explained below).
-3. Attach the Walabot to the center of your door header (explained below).
-4. Run `People_counter.py` and follow the instructions.
+2. Attach the Walabot to the center of your door header (explained below).
+3. Run `people_counter.py` and follow the instructions.
 
-**IMPORTANT NOTE:** Current Walabot settings are for the Walabot Starter and Raspberry Pi 3.
+**IMPORTANT NOTE:** Current Walabot settings are for the Walabot Creator and Raspberry Pi 3.
 
-#### Configure the Raspberry Pi
-
-The Raspberry Pi is an excellent tool for makers, but it is limited in the current it can send to the Walabot.  
-Add the following lines to the end of the file at `/boot/config.txt` in order to configure it to work:
-```
-safe_mode_gpio=4
-max_usb_current=1
-```
 #### Attaching the Walabot to the Door Header
 
 In order of the application to work correctly the Y axis of the Walabot has to be perpendicular to the door header, with the positive side facing outside the room.  
